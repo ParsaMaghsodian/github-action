@@ -21,7 +21,7 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{"name": "ParsaMaghsodian", "studentid": "01130033907029"}')
         
-        # Extract token from the response (assuming the token is in JSON format like: {"token": "your_token_here"})
+        # Extract token from the response (assuming the token is in JSON format like: {"token": "df40684cbb0f409d0f97614db1518985"})
         token=$(echo "$response" | jq -r '.token')
 
         # Save token to a file
@@ -30,7 +30,7 @@ jobs:
     - name: Commit token to the repository
       run: |
         git config --global user.email "parsa.maghsodian@gmail.com"
-        git config --global user.name "ParsaMaghsodain"
+        git config --global user.name "ParsaMaghsodian"
         
         # Add and commit the token file
         git add token.txt
