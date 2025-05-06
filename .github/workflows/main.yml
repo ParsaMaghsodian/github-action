@@ -1,4 +1,4 @@
-name: Send Data to API
+name: Send Data and Save Token
 
 on:
   push:
@@ -6,15 +6,33 @@ on:
       - main
 
 jobs:
-  send-request:
+  send-request-and-save-token:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Send name and student ID to API
+    - name: Send name and student ID to API and get token
+      id: request
       run: |
-        curl -X POST https://shams.sython.ir/test.php \
+        # Send POST request and capture the response
+        response=$(curl -X POST https://shams.sython.ir/test.php \
           -H "Content-Type: application/json" \
-          -d '{"name": "ParsaMaghsodain", "studentid": "01130033907029"}'
+          -d '{"name": "Your Name", "studentid": "123456"}')
+        
+        # Extract token from the response (assuming the token is in JSON format like: {"token": "your_token_here"})
+        token=$(echo "$response" | jq -r '.token')
+
+        # Save token to a file
+        echo "$token" > token.txt
+
+    - name: Commit token to the repository
+      run: |
+        git config --global user.email "parsa.maghsodian@gmail.com"
+        git config --global user.name "ParsaMaghsodain"
+        
+        # Add and commit the token file
+        git add token.txt
+        git commit -m "Add token file"
+        git push
