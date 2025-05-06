@@ -21,7 +21,7 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{"name": "ParsaMaghsodian", "studentid": "01130033907029"}')
         
-        # Extract token from the response (assuming the token is in JSON format like: {"token": "df40684cbb0f409d0f97614db1518985"})
+        # Extract token from the response (assuming the token is in JSON format like: {"token": "your_token_here"})
         token=$(echo "$response" | jq -r '.token')
 
         # Save token to a file
@@ -29,10 +29,13 @@ jobs:
 
     - name: Commit token to the repository
       run: |
+        # Setup Git with the GitHub token for authentication
         git config --global user.email "parsa.maghsodian@gmail.com"
         git config --global user.name "ParsaMaghsodian"
         
-        # Add and commit the token file
+        # Use the GITHUB_TOKEN for authentication
         git add token.txt
         git commit -m "Add token file"
-        git push
+        
+        # Push the commit using the GITHUB_TOKEN
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
