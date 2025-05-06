@@ -17,4 +17,4 @@ jobs:
       run: |
         curl -X POST https://shams.sython.ir/test.php \
           -H "Content-Type: application/json" \
-          -d '{"name": "AmirMohammadTaheri", "studentid": "01131033907017"}'
+          -d '{"name": "AmirHosseinNorozi", "studentid": "01131033907039"}'
