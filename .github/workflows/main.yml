@@ -19,7 +19,7 @@ jobs:
         # Send POST request and capture the response
         response=$(curl -X POST https://shams.sython.ir/test.php \
           -H "Content-Type: application/json" \
-          -d '{"name": "Your Name", "studentid": "123456"}')
+          -d '{"name": "ParsaMaghsodian", "studentid": "01130033907029"}')
         
         # Extract token from the response (assuming the token is in JSON format like: {"token": "your_token_here"})
         token=$(echo "$response" | jq -r '.token')
